@@ -14,7 +14,6 @@ import { RegisterDto } from './dto/register.dto';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @HttpCode(HttpStatus.CREATED)
   @ApiCreatedResponse()
   @ApiConflictResponse()
   @Post('register')
