@@ -8,7 +8,7 @@ import { Request, Response } from 'express';
 
 @Catch(HttpException)
 export class HttpExceptionFilter implements ExceptionFilter {
-  private readonly EXCEPTION_MESSAGES = {
+  private readonly exceptionMessages = {
     401: 'Invalid credentials',
   };
 
@@ -21,13 +21,15 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const error = exception.message;
     const statusCode = exception.getStatus();
     const message = this.getExceptionMessage(exception);
+    const timestamp = new Date().toISOString();
+    const path = request.url;
 
     response.status(statusCode).json({
       statusCode,
       error,
       message,
-      timestamp: new Date().toISOString(),
-      path: request.url,
+      timestamp,
+      path,
     });
   }
 
@@ -39,6 +41,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
       return String(exceptionResponse.error);
     }
 
-    return this.EXCEPTION_MESSAGES[status];
+    return this.exceptionMessages[status];
   }
 }
