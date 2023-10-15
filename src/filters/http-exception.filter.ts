@@ -18,9 +18,8 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
 
-    const error = exception.message;
     const statusCode = exception.getStatus();
-    const message = this.getExceptionMessage(exception);
+    const { error, message } = this.getMessages(exception);
     const timestamp = new Date().toISOString();
     const path = request.url;
 
@@ -33,14 +32,20 @@ export class HttpExceptionFilter implements ExceptionFilter {
     });
   }
 
-  private getExceptionMessage(exception: HttpException): string | undefined {
+  private getMessages(exception: HttpException) {
     const exceptionResponse: Object = exception.getResponse();
     const status = exception.getStatus();
 
     if ('error' in exceptionResponse) {
-      return String(exceptionResponse.error);
+      return {
+        error: String(exceptionResponse.error),
+        message: exception.message,
+      };
     }
 
-    return this.exceptionMessages[status];
+    return {
+      error: exception.message,
+      message: this.exceptionMessages[status],
+    };
   }
 }
