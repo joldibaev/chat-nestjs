@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { INestApplication } from '@nestjs/common';
+import { HttpExceptionFilter } from './filters/http-exception.filter';
 
 function initDocs(app: INestApplication) {
   const config = new DocumentBuilder()
@@ -17,8 +18,14 @@ function initDocs(app: INestApplication) {
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // prefix
   app.setGlobalPrefix('/api');
 
+  // filters
+  app.useGlobalFilters(new HttpExceptionFilter());
+
+  // docs
   initDocs(app);
 
   await app.listen(3000);
