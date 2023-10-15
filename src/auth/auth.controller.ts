@@ -8,7 +8,9 @@ import {
 } from '@nestjs/swagger';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
+import { Public } from './metadata/public.metadata';
 
+@Public()
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
