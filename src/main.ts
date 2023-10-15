@@ -8,6 +8,7 @@ function initDocs(app: INestApplication) {
     .setTitle('Open Chat')
     .setDescription('The Open Chat API description')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
