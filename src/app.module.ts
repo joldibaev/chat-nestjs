@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { PrismaService } from './prisma/prisma.service';
 import { UsersModule } from './users/users.module';
 import { AuthService } from './auth/auth.service';
@@ -18,7 +16,6 @@ const Guards = [
 
 @Module({
   imports: [UsersModule, AuthModule],
-  controllers: [AppController],
-  providers: [AppService, PrismaService, AuthService, BcryptService, ...Guards],
+  providers: [PrismaService, AuthService, BcryptService, ...Guards],
 })
 export class AppModule {}
