@@ -48,4 +48,11 @@ export class UsersService {
   getAll() {
     return this.prisma.user.findMany();
   }
+
+  async getByIds(usersIds: string[]) {
+    return this.prisma.user.findMany({
+      where: { id: { in: usersIds } },
+      distinct: ['id'],
+    });
+  }
 }

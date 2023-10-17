@@ -5,6 +5,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { BcryptService } from './services/bcrypt.service';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './modules/auth/auth.guard';
+import { ChatModule } from './modules/chat/chat.module';
 
 const Guards = [
   {
@@ -14,7 +15,7 @@ const Guards = [
 ];
 
 @Module({
-  imports: [UsersModule, AuthModule],
+  imports: [UsersModule, AuthModule, ChatModule],
   providers: [PrismaService, BcryptService, ...Guards],
 })
 export class AppModule {}
