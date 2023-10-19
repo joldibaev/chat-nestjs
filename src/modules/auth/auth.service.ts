@@ -17,14 +17,18 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async register(email: string, password: string): Promise<Token> {
+  async register(
+    email: string,
+    name: string,
+    password: string,
+  ): Promise<Token> {
     const isUserExists = await this.usersService.isUserExists(email);
 
     if (isUserExists) {
       throw new ConflictException('User already exists');
     }
 
-    const newUser = await this.usersService.create(email, password);
+    const newUser = await this.usersService.create(email, name, password);
 
     return this.getToken(newUser.id, newUser.email);
   }

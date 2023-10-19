@@ -13,7 +13,7 @@ export class UsersService {
     private readonly bcryptService: BcryptService,
   ) {}
 
-  async create(email: string, password: string) {
+  async create(email: string, name: string, password: string) {
     const isUserExists = await this.isUserExists(email);
 
     if (isUserExists) {
@@ -25,6 +25,7 @@ export class UsersService {
     return this.prisma.user.create({
       data: {
         email,
+        name,
         password: hashedPassword,
       },
     });

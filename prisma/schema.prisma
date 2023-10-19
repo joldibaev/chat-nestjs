@@ -19,6 +19,7 @@ model User {
   chats    Chat[]
   contacts Contact[] @relation("UserToContact")
   contact  Contact[] @relation("ContactToUser")
+  messages Message[]
 }
 
 model Contact {
@@ -36,5 +37,20 @@ model Chat {
   id   String  @id @default(uuid())
   name String?
 
-  users User[]
+  users    User[]
+  messages Message[]
+}
+
+model Message {
+  id   String @id @default(uuid())
+  text String
+
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  chat   Chat   @relation(fields: [chatId], references: [id])
+  chatId String
 }

@@ -7,7 +7,7 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { ChatService } from './chat.service';
+import { ChatsService } from './chats.service';
 import { CreateChatDto } from './dto/create-chat.dto';
 import { UpdateChatDto } from './dto/update-chat.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
@@ -15,10 +15,10 @@ import { User } from '../users/user.decorator';
 import { UserPayload } from '../../interface/user-payload';
 
 @ApiBearerAuth()
-@ApiTags('chat')
-@Controller('chat')
-export class ChatController {
-  constructor(private readonly chatService: ChatService) {}
+@ApiTags('chats')
+@Controller('chats')
+export class ChatsController {
+  constructor(private readonly chatService: ChatsService) {}
 
   @Post()
   createNewChat(@Body() createChatDto: CreateChatDto) {
