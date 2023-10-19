@@ -16,7 +16,20 @@ model User {
   password String
   name     String?
 
-  chats Chat[]
+  chats    Chat[]
+  contacts Contact[] @relation("UserToContact")
+  contact  Contact[] @relation("ContactToUser")
+}
+
+model Contact {
+  id   String @id @default(uuid())
+  name String
+
+  owner   User   @relation("UserToContact", fields: [ownerId], references: [id])
+  ownerId String
+
+  contact   User   @relation("ContactToUser", fields: [contactId], references: [id])
+  contactId String
 }
 
 model Chat {
