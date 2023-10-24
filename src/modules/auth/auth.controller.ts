@@ -20,7 +20,11 @@ export class AuthController {
   @ApiConflictResponse()
   @Post('register')
   async register(@Body() registerDto: RegisterDto) {
-    return this.authService.register(registerDto.email, registerDto.password);
+    return this.authService.register(
+      registerDto.email,
+      registerDto.name,
+      registerDto.password,
+    );
   }
 
   @HttpCode(HttpStatus.OK)

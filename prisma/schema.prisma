@@ -15,4 +15,42 @@ model User {
   email    String  @unique
   password String
   name     String?
+
+  chats    Chat[]
+  contacts Contact[] @relation("UserToContact")
+  contact  Contact[] @relation("ContactToUser")
+  messages Message[]
+}
+
+model Contact {
+  id   String @id @default(uuid())
+  name String
+
+  owner   User   @relation("UserToContact", fields: [ownerId], references: [id])
+  ownerId String
+
+  contact   User   @relation("ContactToUser", fields: [contactId], references: [id])
+  contactId String
+}
+
+model Chat {
+  id   String  @id @default(uuid())
+  name String?
+
+  users    User[]
+  messages Message[]
+}
+
+model Message {
+  id   String @id @default(uuid())
+  text String
+
+  author   User   @relation(fields: [authorId], references: [id])
+  authorId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  chat   Chat   @relation(fields: [chatId], references: [id])
+  chatId String
 }

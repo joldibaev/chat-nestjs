@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, MinLength } from 'class-validator';
+import { IsAlpha, IsEmail, MinLength } from 'class-validator';
 
 export class RegisterDto {
   @ApiProperty({
@@ -7,6 +7,12 @@ export class RegisterDto {
   })
   @IsEmail()
   email: string;
+
+  @ApiProperty({
+    example: 'Nurlan',
+  })
+  @IsAlpha()
+  name: string;
 
   @ApiProperty({
     example: '123456',
