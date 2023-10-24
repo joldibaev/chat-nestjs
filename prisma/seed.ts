@@ -73,14 +73,50 @@ async function createGroups(nurlan: User, justin: User, scooter: User) {
             text: 'Are you ready, guys?',
             authorId: scooter.id,
           },
-          {
-            text: 'For sure!',
-            authorId: justin.id,
-          },
         ],
       },
     },
   });
+
+  setTimeout(async () => {
+    const chat1 = await prisma.message.create({
+      data: {
+        chatId: chat.id,
+        authorId: justin.id,
+        text: 'For sure!',
+      },
+    });
+  }, 1000);
+
+  setTimeout(async () => {
+    const chat2 = await prisma.message.create({
+      data: {
+        chatId: chat.id,
+        authorId: nurlan.id,
+        text: 'Yeah!',
+      },
+    });
+  }, 1500);
+
+  setTimeout(async () => {
+    const chat3 = await prisma.message.create({
+      data: {
+        chatId: chat.id,
+        authorId: nurlan.id,
+        text: "Let's GOOOO!",
+      },
+    });
+  }, 2000);
+
+  setTimeout(async () => {
+    const chat3 = await prisma.message.create({
+      data: {
+        chatId: chat.id,
+        authorId: scooter.id,
+        text: "Alright! Let's meet at 9pm",
+      },
+    });
+  }, 2200);
 
   return [chat];
 }
