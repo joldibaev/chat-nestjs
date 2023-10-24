@@ -74,15 +74,15 @@ export class ChatsService {
     }));
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return `This action returns a #${id} chat`;
   }
 
-  update(id: number, updateChatDto: UpdateChatDto) {
+  update(id: string, updateChatDto: UpdateChatDto) {
     return `This action updates a #${id} chat`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} chat`;
   }
 
@@ -100,5 +100,32 @@ export class ChatsService {
 
     const companion = users.filter((user) => user.id !== userId).at(0);
     return companion?.name;
+  }
+
+  getMessages(id: string) {
+    return this.prisma.message.findMany({
+      where: { chatId: id },
+      include: {
+        author: {
+          select: {
+            email: true,
+            name: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+  }
+
+  createMessage(authorId: string, chatId: string, text: string) {
+    return this.prisma.message.create({
+      data: {
+        chatId,
+        text,
+        authorId,
+      },
+    });
   }
 }
